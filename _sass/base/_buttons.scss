@@ -1,0 +1,42 @@
+// Buttons
+// =======
+
+button, input[type="button"], .button {
+  appearance: none;
+  background: none;
+  border: none;
+  cursor: pointer;
+  display: inline-block;
+  font: inherit;
+  font-size: var(--small);
+
+  &:not(.unstyled) {
+    background: none;
+    background-color: $green;
+    color: #fff;
+    // font-family: $sans;
+    font-weight: bold;
+    // letter-spacing: 0.04em;
+    line-height: 1;
+    text-decoration: none;
+    // text-transform: uppercase;
+    padding: 0.5em 0.75em;
+    @include user-select(none);
+
+    &[disabled], &.is-disabled, form:invalid &, &:disabled {
+      background-color: lighten($light-gray, 15%);
+      pointer-events: none;
+    }
+
+    &.is-loading {
+      background-image: url('data:image/svg+xml,%3Csvg%20width%3D%22120%22%20height%3D%2230%22%20viewBox%3D%220%200%20120%2030%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20fill%3D%22%23fff%22%3E%0D%0A%20%20%20%20%3Ccircle%20cx%3D%2215%22%20cy%3D%2215%22%20r%3D%2215%22%3E%0D%0A%20%20%20%20%20%20%20%20%3Canimate%20attributeName%3D%22r%22%20from%3D%2215%22%20to%3D%2215%22%0D%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20begin%3D%220s%22%20dur%3D%220.8s%22%0D%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20values%3D%2215%3B9%3B15%22%20calcMode%3D%22linear%22%0D%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20repeatCount%3D%22indefinite%22%20%2F%3E%0D%0A%20%20%20%20%20%20%20%20%3Canimate%20attributeName%3D%22fill-opacity%22%20from%3D%221%22%20to%3D%221%22%0D%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20begin%3D%220s%22%20dur%3D%220.8s%22%0D%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20values%3D%221%3B.5%3B1%22%20calcMode%3D%22linear%22%0D%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20repeatCount%3D%22indefinite%22%20%2F%3E%0D%0A%20%20%20%20%3C%2Fcircle%3E%0D%0A%20%20%20%20%3Ccircle%20cx%3D%2260%22%20cy%3D%2215%22%20r%3D%229%22%20fill-opacity%3D%220.3%22%3E%0D%0A%20%20%20%20%20%20%20%20%3Canimate%20attributeName%3D%22r%22%20from%3D%229%22%20to%3D%229%22%0D%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20begin%3D%220s%22%20dur%3D%220.8s%22%0D%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20values%3D%229%3B15%3B9%22%20calcMode%3D%22linear%22%0D%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20repeatCount%3D%22indefinite%22%20%2F%3E%0D%0A%20%20%20%20%20%20%20%20%3Canimate%20attributeName%3D%22fill-opacity%22%20from%3D%220.5%22%20to%3D%220.5%22%0D%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20begin%3D%220s%22%20dur%3D%220.8s%22%0D%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20values%3D%22.5%3B1%3B.5%22%20calcMode%3D%22linear%22%0D%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20repeatCount%3D%22indefinite%22%20%2F%3E%0D%0A%20%20%20%20%3C%2Fcircle%3E%0D%0A%20%20%20%20%3Ccircle%20cx%3D%22105%22%20cy%3D%2215%22%20r%3D%2215%22%3E%0D%0A%20%20%20%20%20%20%20%20%3Canimate%20attributeName%3D%22r%22%20from%3D%2215%22%20to%3D%2215%22%0D%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20begin%3D%220s%22%20dur%3D%220.8s%22%0D%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20values%3D%2215%3B9%3B15%22%20calcMode%3D%22linear%22%0D%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20repeatCount%3D%22indefinite%22%20%2F%3E%0D%0A%20%20%20%20%20%20%20%20%3Canimate%20attributeName%3D%22fill-opacity%22%20from%3D%221%22%20to%3D%221%22%0D%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20begin%3D%220s%22%20dur%3D%220.8s%22%0D%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20values%3D%221%3B.5%3B1%22%20calcMode%3D%22linear%22%0D%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20repeatCount%3D%22indefinite%22%20%2F%3E%0D%0A%20%20%20%20%3C%2Fcircle%3E%0D%0A%3C%2Fsvg%3E%0D%0A');
+      background-repeat: no-repeat;
+      background-position: center;
+      background-size: 2em auto;
+      color: transparent;
+    }
+
+    &.did-error {
+    }
+  }
+}

@@ -1,0 +1,107 @@
+<script>
+  const pageScripts = [
+    {% for script in include.files %}'{{script}}',{% endfor %}
+  ]
+  let loadedPageScripts = 0
+  function onLoadPageScript () {
+    loadedPageScripts++
+    if (loadedPageScripts < pageScripts.length || !window.setup) return
+    if (document.readyState !== 'loading') window.setup.call(undefined, arguments)
+    else window.addEventListener('DOMContentLoaded', window.setup.bind(undefined, arguments))
+  }
+  
+  (function () {
+    const typekitKey = 'typekit_styles_cache'  
+
+    let polyfills = [], features = []
+    if (typeof fetch === 'undefined') features.push('fetch')
+    if (typeof Promise === 'undefined') features.push('Promise')
+    if (typeof CustomEvent === 'undefined') features.push('CustomEvent')
+    if (!('isArray' in Array)) features.push('Array.isArray')
+    if (!('classList' in Element.prototype)) features.push('Element.prototype.classList')
+    if (!('includes' in String.prototype)) features.push('String.prototype.includes')
+    if (features.length > 0) {
+      polyfills.push('https://cdn.polyfill.io/v2/polyfill.min.js?features=' + features.join(',') + '&flags=gated,always&ua=chrome/50')
+    }
+    if (typeof URLSearchParams === 'undefined') polyfills.push('/js/lib/url-search-params/build/url-search-params.js')
+    if (typeof FormData === 'undefined' || !FormData.prototype.keys) polyfills.push('/js/lib/form-data/formdata.min.js')
+    if (polyfills.length > 0) {
+      let loaded = 0
+      const onLoadPolyfill = function () {
+        loaded++
+        if (loaded >= polyfills.length) setupPage()
+      }
+      polyfills.forEach(function (polyfill) { loadScript(polyfill, onLoadPolyfill) })
+    } else {
+      setupPage()
+    }
+
+    function setupPage() {
+      document.documentElement.classList.remove('no-js')
+
+      initTypekit()
+      setPrevious()
+      loadPageScripts()
+    }
+
+    function setPrevious() {
+      window.onbeforeunload = function () {
+        ('sessionStorage' in window) && sessionStorage.setItem('previous', '{{page.url}}')
+      }
+    }
+
+    function loadScript(src, callback) {
+      let scriptEl = document.createElement('script')
+      scriptEl.async = true
+      scriptEl.defer = true
+      if (callback) scriptEl.onload = callback
+      scriptEl.src = src
+      document.head.appendChild(scriptEl)
+    }
+
+    function makeStyle(cssText) {
+      const styleEl = document.createElement('style')
+      styleEl.type = 'text/css'
+      if (styleEl.styleSheet) styleEl.styleSheet.cssText = cssText
+      else styleEl.appendChild(document.createTextNode(cssText))
+      document.head.appendChild(styleEl)
+    }
+
+    function loadPageScripts() {
+      pageScripts.forEach(function(script) {
+        let src = script
+        if (src.includes('recaptcha/api.js')) {
+          src += (src.includes('.js?') ? '&' : '?') + 'onload=onLoadPageScript'
+          return loadScript(src)
+        }
+        loadScript(src, onLoadPageScript)
+      })
+    }
+
+    function initTypekit() {
+      if ('sessionStorage' in window && sessionStorage.getItem(typekitKey)) {
+        makeStyle(sessionStorage.getItem(typekitKey))
+      } else {
+        loadScript('https://use.typekit.net/{{site.secrets.typekit}}.js', function () {
+          Typekit.load({ active: cacheTypekitStyles, classes: false })
+        })
+      }
+    }
+
+    function cacheTypekitStyles() {
+      if (!('sessionStorage' in window)) return
+      const styles = Array.from(document.head.getElementsByTagName('style'))
+        .filter(function (child) {
+          return child.styleSheet ?
+            child.styleSheet.cssText.includes('typekit') :
+            child.innerHTML.includes('typekit')
+        })
+        .map(function (child) {
+          return child.styleSheet ? child.styleSheet.cssText : child.innerHTML
+        })
+        .join('\n')
+
+      sessionStorage.setItem(typekitKey, styles)
+    }
+  })()
+</script>

@@ -1,0 +1,70 @@
+// Spacing
+// =======
+
+// Child-level
+// -----------
+
+@mixin leading($space: var(--spacing), $horizontal: false) {
+  $parent: selector-parse(&);
+  @if length($parent) > 1 or length(nth($parent, 1)) <= 1 {
+    * + & {
+      @if $horizontal {
+        margin-left: $space;
+        margin-top: 0;
+      } @else {
+        margin-top: $space;
+      }
+    }
+  } @else {
+    $parent: nth($parent, 1);
+    $last: nth($parent, -1);
+    @at-root #{sl-replace-nth($parent, -1, unquote("* + #{$last}"))} {
+      @if $horizontal {
+        margin-left: $space;
+        margin-top: 0;
+      } @else {
+        margin-top: $space;
+      }
+    };
+  }
+}
+
+@mixin trailing($space: var(--spacing), $horizontal: false) {
+  & + * {
+    @if $horizontal {
+      margin-left: $space;
+      margin-top: 0;
+    } @else {
+      margin-top: $space;
+    }
+  }
+}
+
+@mixin removed {
+  @include leading(0);
+  @include trailing(0);
+}
+
+@mixin flush {
+  @include leading(0);
+  @include trailing(0);
+}
+
+// Parent-level
+// ------------
+
+@mixin vertical($space: var(--spacing)) {
+  > * {
+    @include trailing($space);
+  }
+}
+
+@mixin horizontal($space: var(--spacing)) {
+  > * {
+    @include trailing($space, true);
+  }
+}
+
+@mixin compact {
+  @include vertical(0);
+}

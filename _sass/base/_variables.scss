@@ -1,0 +1,19 @@
+// Variables
+// =========
+//
+// These are a breeze to respond if they're custom
+// properties instead of Sass variables.
+//
+
+:root {
+  @include ms-respond('--huge', 7);
+  @include ms-respond('--massive', 6);
+  @include ms-respond('--large', 5);
+  @include ms-respond('--big', 2);
+  @include ms-respond('--medium', 1);
+  @include ms-respond('--base', 0);
+  @include ms-respond('--small', -1);
+  @include ms-respond('--tiny', -2);
+  
+  @include ms-respond('--spacing', 1);
+}

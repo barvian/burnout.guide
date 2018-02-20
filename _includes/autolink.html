@@ -1,0 +1,67 @@
+{%- assign content = include.content -%}
+{%- assign words = content | split: ' ' -%}
+{%- for word in words -%}
+  {%- assign href = word -%}
+
+  {% comment %}Clean up punctuation{% endcomment %}
+  {%- assign lead = '' -%}
+  {%- assign firstChar = href | slice: 0, 1 -%}
+  {%- if firstChar == '(' or firstChar == '[' -%}
+    {%- assign lead = firstChar -%}
+    {%- assign hrefSize = href | size | minus: 1 -%}
+    {%- assign href = href | slice: 1, hrefSize -%}
+  {%- endif -%}
+  {%- assign trail = '' -%}
+  {%- for p in (1..5) -%}
+    {%- assign lastChar = href | slice: -1, 1 -%}
+    {%- if lastChar == '.' or lastChar == ',' or lastChar == ';' or lastChar == '!' or lastChar == '?' or lastChar == ')' or lastChar == ']' -%}
+      {%- assign trail = lastChar | append: trail -%}
+      {%- assign hrefSize = href | size | minus: 1 -%}
+      {%- assign href = href | slice: 0, hrefSize -%}
+      {%- if lastChar == ')' or lastChar == ']' -%}{% break %}{%- endif -%}
+    {%- endif -%}
+  {%- endfor -%}
+  
+  {%- assign parsed = href -%}
+  {%- assign containsProtocol = false -%}
+  {%- assign first7 = parsed | slice: 0, 7 -%}
+  {%- assign first8 = parsed | slice: 0, 8 -%}
+  {%- if first7 == 'http://' or first8 == 'https://' -%}
+    {%- assign containsProtocol = true -%}
+  {%- endif -%}
+  {%- if containsProtocol -%}
+    {%- assign parsed = parsed | remove_first: 'http://' -%}
+    {%- assign parsed = parsed | remove_first: 'https://' -%}
+  {%- endif -%}
+  {%- assign parts = parsed | split: '.' -%}
+  {%- assign domainIndex = parts | size | minus: 2 -%}
+  {%- assign domain = parts[domainIndex] -%}
+  {%- assign lastCharDomain = domain | slice: -1, 1 -%}
+  {%- assign lastPart = parts | last -%}
+  {%- assign tld = lastPart | split: '/' | first -%}
+
+  {%- assign valid = false -%}
+  {%- assign mail = false -%}
+  {%- if containsProtocol -%}
+    {%- assign valid = true -%}
+  {%- elsif parts.size >= 2 and lastCharDomain != '_' and lastCharDomain != '-' and tld.size >= 2 -%}
+    {%- if parsed contains '](' -%}
+      {%- assign valid = false -%}
+    {%- elsif parsed contains '@' -%}
+      {%- assign valid = true -%}
+      {%- unless tld contains '@' -%}
+        {%- assign mail = true -%}
+      {%- endunless -%}
+    {%- else -%}
+      {%- assign valid = true -%}
+    {%- endif -%}
+  {%- endif -%}
+  
+  {%- if valid -%}
+    {%- capture tag -%}
+      {{lead}}<a href="{% unless containsProtocol %}{% if mail %}mailto:{% else %}http://{% endif %}{% endunless %}{{href}}"{% if include.blank %} target="_blank"{% endif %}>{{href}}</a>{{trail}}
+    {%- endcapture -%}
+    {%- assign content = content | replace_first: word, tag -%}
+  {%- endif -%}
+{%- endfor -%}
+{{ content | markdownify }}

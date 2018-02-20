@@ -1,0 +1,25 @@
+comments:
+  branch: "development"
+  path: "_data/comments/{options.slug}"
+  format: "yaml"
+  moderation: true
+  commitMessage: "New comment."
+  filename: "comment-{@timestamp}"
+  allowedFields: ['name', 'body', 'email', 'replying_to']
+  requiredFields: [] # email subscriptions happen with the same request...
+  generatedFields:
+    date:
+      type: "date"
+      options:
+        format: "iso8601"
+  transforms:
+    email: md5
+  reCaptcha: # ...but recaptcha is always enforced
+    enabled: true
+    siteKey: "6Lf5TUwUAAAAANKAsm4baH_MwQ2NZcnx2dNX_Gfb"
+    secret: "zUGLT/hclZZKwfrRGE+e1FtAjjJyffE5qrFtAnePuhfRE2XggY+4PnOW0b1RxkLkZ4MZB7suH98OIA8W1HQQwhfqp9Af5asUhZLcRqo/JPp+vFMWBWK2Ss+MdA8iKO/D8q/TaGUJZgfcV6OVfxL57U5negIf9ZKD67DsjrqkyA8="
+  notifications:
+    enabled: true
+    apiKey: "icvlYCnH5rTmWoM6qEwSWy4o5CSg8quTsLbT2GJ6XEgcPcrI8+oqLz+x91/7EeS/vlr1YwUgfMQ1ei1Oy6CPy8AYQ5F45rBPTvcvqy+l7jZ+9XXFobsQGybZ+Ud2RJ4EZu4YjKY4XUGzF/aYw8L8wfyUZJgyEoE6AKs01dofXUc="
+    domain: "nuIxl+7wLeKAqVJOnhPHUDJ03cf6rINC8MoB/DXj5A4UgSa00QobmEA1nFnSPYK1QtVh0OvDU80aKu1pvzcQR83a5b5AB4TkHbU+7N9aHqwZ6ZvWbr7pRyUZEHGPmKYKEq8mIxRelQK5J2v780OpIKgSCOPAylpYjVAmjJGYmzI="
+  
