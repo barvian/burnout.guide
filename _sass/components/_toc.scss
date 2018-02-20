@@ -1,0 +1,38 @@
+// TOC
+// ===
+
+.toc {
+  counter-reset: toc-link;
+  margin-left: -1rem;
+  margin-right: -1rem;
+  @include user-select(none);
+  
+  @include compact;
+
+  > a {
+    color: lighten($light-gray, 25%);
+    display: block;  
+    font-family: $heading;
+    font-size: var(--medium);
+    padding: 1rem;
+    text-decoration: none;
+    transition: color 100ms ease-in-out, box-shadow 200ms ease-out;
+
+    &::before {
+      color: darken($light-gray, 15%);
+      content: counter(toc-link, decimal-leading-zero);
+      counter-increment: toc-link;
+      display: inline-block;
+      margin-right: var(--tiny);
+    }
+
+    &:hover, &:focus {
+      box-shadow: inset 0 -4rem 0 rgba(255, 255, 255, 0.075);
+      color: #fff;
+    }
+
+    + a {
+      border-top: 1px solid rgba(255, 255, 255, 0.1);
+    }
+  }
+}

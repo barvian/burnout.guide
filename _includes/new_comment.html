@@ -1,0 +1,102 @@
+{%- capture p -%}{% if include.reply %}reply{% else %}comment{% endif %}{%- endcapture -%}
+<div
+  {% if include.reply %}hidden{% endif %}
+  class="new-comment js-new-comment{% if include.reply %} is-reply{% endif %}"
+  id="{{p}}"
+>
+  <form
+    class="new-comment__form"
+    method="post"
+    action="https://api.staticman.net/v2/entry/{{site.repository}}/{{site.staticman.branch}}/comments"
+  >
+    <fieldset class="new-comment__wrapper">
+      <input type="hidden" name="options[slug]" value="{{ page.slug }}" />
+      <input type="hidden" name="options[reCaptcha][siteKey]" value="{{site.secrets.reCaptcha.siteKey}}">
+      <input type="hidden" name="options[reCaptcha][secret]" value="{{site.secrets.reCaptcha.secret}}">
+      {% if include.reply %}
+        <input type="hidden" name="fields[replying_to]" value="" />
+      {% endif %}
+      
+      <label hidden for="{{p}}-message">Comment</label>
+      <textarea id="{{p}}-message"
+        required
+        class="new-comment__message js-autogrow"
+        name="fields[body]"
+        rows=1
+        placeholder="{% if include.reply %}Write a reply...{% else %}Leave a comment...{% endif %}"
+      ></textarea>
+      <div class="new-comment__extra-wrapper">
+        <div class="new-comment__extra button-field">
+          <label hidden for="{{p}}-name">Name</label>
+          <input type="text"
+            id="{{p}}-name"
+            required
+            class="new-comment__name"
+            name="fields[name]"
+            placeholder="Name"
+          />
+          <button disabled type="submit">Leave comment</button>
+          <div
+            hidden
+            class="captcha g-recaptcha"
+            data-badge="bottomright"
+            data-sitekey="{{site.secrets.reCaptcha.siteKey}}"
+            data-size="invisible"
+          ></div>
+        </div>
+      </div>
+    </fieldset>
+  </form>
+  <form
+    class="js-subscription new-comment__success new-comment__subscription success"
+    method="post"
+    action="https://api.staticman.net/v2/entry/{{site.repository}}/{{site.staticman.branch}}/comments"
+  >
+    <fieldset>
+      <input type="hidden" name="options[origin]" value="{{ page.url | absolute_url }}" />
+      <input type="hidden" name="options[parent]" value="{{ page.slug }}" />
+      <input type="hidden" name="options[reCaptcha][siteKey]" value="{{site.secrets.reCaptcha.siteKey}}">
+      <input type="hidden" name="options[reCaptcha][secret]" value="{{site.secrets.reCaptcha.secret}}">
+      <input type="hidden" name="options[subscribe]" value="email" />
+      <div class="new-comment__success-message">
+        <span class="new-comment__success-header">Thanks for your input!</span>
+        <p>
+          {% if include.reply %}
+            Your reply will appear once it's been approved.
+            <span class="new-comment__question">Want to get e-mailed when this comment receives new replies?</span>
+          {% else %}
+            Your comment will appear once it's been approved.
+            <span class="new-comment__question">Want to get e-mailed when new comments are left on this post?</span>
+          {% endif %}
+        </p>
+        <p class="new-comment__subscribed">
+          &#10003;
+          {% if include.reply %}
+            You're subscribed to email notifications for this comment.
+          {% else %}
+            You're subscribed to email notifications for this post.
+          {% endif %}
+        </p>
+        <div class="button-field new-comment__subscribe">
+          <label for="{{p}}-email" hidden>Email</label>
+          <input type="email"
+            id="{{p}}-email"
+            required
+            class="new-comment__email"
+            name="fields[email]"
+            placeholder="Email (for notifications only)"
+            spellcheck="false"
+          />
+          <button disabled type="submit">Subscribe</button>
+          <div
+            hidden
+            class="captcha g-recaptcha"
+            data-badge="bottomright"
+            data-sitekey="{{site.secrets.reCaptcha.siteKey}}"
+            data-size="invisible"
+          ></div>
+        </div>
+      </div>
+    </fieldset>
+  </form>
+</div>
