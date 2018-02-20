@@ -1,2 +1,0 @@
-# burnout.guide
-🚧
