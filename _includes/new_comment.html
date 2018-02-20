@@ -1,0 +1,61 @@
+{%- capture p -%}{% if include.reply %}reply-{% else %}comment-{% endif %}{%- endcapture -%}
+<form
+  {% if include.reply %}hidden{% endif %}
+  id="{{p}}form"
+  class="new-comment js-new-comment{% if include.reply %} is-reply{% endif %}"
+  method="POST"
+  action="https://api.staticman.net/v2/entry/barvian/burnout.guide/development/comments"
+>
+  <input type="hidden" name="options[origin]" value="{{ page.url | absolute_url }}" />
+  <input type="hidden" name="options[parent]" value="{{ page.url | absolute_url }}" />
+  <input type="hidden" name="options[slug]" value="{{ page.slug }}" />
+  {% if include.reply %}
+    <input type="hidden" name="fields[replying_to]" value="" />
+  {% endif %}
+  
+  <label hidden for="{{p}}message">Comment</label>
+  <textarea id="{{p}}message"
+    required
+    class="new-comment__message"
+    name="fields[message]"
+    rows=1
+    placeholder="Write a reply..."
+  ></textarea>
+  <div class="new-comment__info-wrapper">
+    <fieldset class="new-comment__info">
+      <legend hidden>Info</legend>
+      <label hidden for="{{p}}name">Name</label>
+      <input type="text"
+        id="{{p}}name"
+        required
+        class="new-comment__name"
+        name="fields[name]"
+        placeholder="Name"
+      />
+      <input type="checkbox"
+        class="new-comment__subscribe"
+        id="{{p}}subscribe" 
+        name="options[subscribe]"
+        value="email"
+      />
+      <label for="{{p}}subscribe">Notify me of new comments via email</label>
+      <div class="new-comment__email-wrapper">
+        <label hidden for="{{p}}email">Email</label>
+        <input type="email"
+          id="{{p}}name"
+          class="new-comment__email"
+          name="fields[email]"
+          placeholder="Email (for notifications only)"
+          spellcheck="false"
+        />
+      </div>
+      <button disabled type="submit" class="new-comment__post">Leave comment</button>
+      <div
+        class="new-comment__captcha g-recaptcha"
+        data-badge="inline"
+        data-sitekey="{{site.secrets.recaptcha.site}}"
+        data-size="invisible"
+      ></div>
+    </fieldset>
+  </div>
+</form>

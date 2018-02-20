@@ -1,0 +1,15 @@
+// Links
+// =====
+
+a {
+  color: currentColor;
+  text-decoration: underline;
+}
+
+.hidden-link {
+  text-decoration: none;
+  
+  &:hover, &:active, &:focus {
+    text-decoration: underline;
+  }
+}

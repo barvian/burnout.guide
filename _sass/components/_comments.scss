@@ -1,0 +1,138 @@
+// Comments
+// ========
+
+.comment:not(.is-reply), .new-comment:not(.is-reply) {
+  background: #fff;
+  box-shadow: 0 10px 35px -10px rgba($light-gray, 0.2);
+
+  @include leading(var(--big));
+  @include trailing(var(--big));
+}
+
+.comment {
+  @include compact;
+
+  > .new-comment {
+    border-top: 2px solid $off-white;
+  }
+}
+
+.comment__toplevel {
+  padding: var(--spacing);
+
+  @include vertical(calc(var(--spacing) / 2));
+}
+
+.comment__header {
+  font-size: var(--small);
+
+  @include horizontal(0.35em);
+}
+
+.comment__author {
+  color: $dark;
+  font-weight: 500;
+}
+
+.comment__date {
+  color: $light-gray;
+  font-size: var(--tiny);
+}
+
+.comment__reply {
+  color: $green;
+}
+
+.comment__replies {
+  @include compact;
+
+  > .comment.is-reply {
+    border-top: 2px solid $off-white;
+  }
+} 
+
+// New comment
+// -----------
+
+
+.new-comment {
+  @include compact;
+
+  &.is-reply .new-comment__message {
+    box-sizing: content-box; // I have no idea
+  }
+}
+
+.new-comment__info-wrapper {
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 350ms ease-in-out;
+  
+  @include flush;
+}
+
+.new-comment__info {
+  padding: 0 var(--spacing) var(--spacing);
+
+  &::before {
+    background: darken($off-white, 15%);
+    content: '';
+    display: block;
+    height: 2px;
+  }
+}
+
+.new-comment__message.new-comment__message {
+  border: none;
+  display: block;
+  padding: calc(var(--spacing) + 2px) var(--spacing) var(--spacing);
+  width: 100%;
+}
+
+.new-comment__message:not(:invalid) ~ .new-comment__info-wrapper,
+.new-comment__info-wrapper:hover {
+  max-height: 22em;
+
+  @media (min-width: 600px) {
+    max-height: 16em;
+  }
+}
+
+.new-comment__name.new-comment__name, .new-comment__email.new-comment__email {
+  padding: calc(var(--spacing) / 2) 0;
+}
+
+.new-comment__name {
+  @include leading(calc(var(--spacing) / 2));
+}
+
+.new-comment__name, .new-comment__email, .new-comment__subscribe + label {
+  display: block;
+  width: 100%;
+}
+
+.new-comment__email-wrapper {
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 350ms ease-in-out;
+
+  @include flush;
+}
+
+.new-comment__email {
+  margin-top: calc(var(--spacing) / 2);
+}
+
+.new-comment__subscribe:checked ~ .new-comment__email-wrapper {
+  max-height: 4em;
+}
+
+.new-comment__post {
+  @include leading;
+}
+
+.new-comment__captcha {
+  @media (min-width: 600px) {
+    float: right;
+  }
+}

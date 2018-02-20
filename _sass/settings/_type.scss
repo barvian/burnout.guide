@@ -1,0 +1,27 @@
+// Type
+// ====
+
+$line: 32rem;
+
+// Scale
+// -----
+
+$modularscale: (
+  base: 23px,
+  ratio: $major-second,
+  $tiny: (
+    base: 18px,
+    ratio: $major-second
+  ),
+  $full: (
+    base: 23px,
+    ratio: $major-second
+  )
+);
+
+// Stacks
+// ------
+
+$body: Georgia, serif;
+$heading: "utopia-std-display", Georgia, serif;
+$sans: Arial, Helvetica, sans-serif;
