@@ -1,0 +1,8 @@
+// Numbers
+// =======
+
+// Replacement for the unwieldiness of CSS's
+// calc() inside Sass
+@function scalc($expr) {
+  @return calc(#{unquote($expr)});
+}

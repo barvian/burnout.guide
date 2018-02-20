@@ -1,0 +1,31 @@
+// Article
+// =======
+// 
+// Markdown-compiled text.
+//
+
+.article {  
+  h1, p { 
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  hr {
+    border: none;
+    height: 1em;
+    max-width: 32rem;
+    margin-left: auto;
+    margin-right: auto;
+
+    &::after {
+      content: '*\0000a0\0000a0\0000a0*\0000a0\0000a0\0000a0*';
+      white-space: nowrap;
+    }
+  }
+
+  blockquote > p {
+    border-left: 3px solid $light-gray;
+    font-style: italic;
+    padding-left: $spacing;
+  }
+}

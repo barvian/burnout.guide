@@ -1,0 +1,23 @@
+{%- if include.files.size > 0 -%}
+<noscript id="deferred-styles">
+  <style>
+    {% for file in include.files %}
+      @import url({{file}});
+    {% endfor %}
+    .non-critical { transition: opacity 150ms ease-in-out; opacity: 1 }
+  </style>
+</noscript>
+<script>
+  function loadDeferredStyles() {
+    const addStylesNode = document.getElementById("deferred-styles")
+    const replacement = document.createElement("div")
+    replacement.innerHTML = addStylesNode.textContent
+    document.body.appendChild(replacement.children[0])
+    addStylesNode.parentElement.removeChild(addStylesNode)
+  }
+  const raf = window.requestAnimationFrame || window.mozRequestAnimationFrame ||
+    window.webkitRequestAnimationFrame || window.msRequestAnimationFrame
+  if (raf) raf(function() { window.setTimeout(loadDeferredStyles, 0) })
+  else window.addEventListener('load', loadDeferredStyles)
+</script>
+{%- endif -%}
