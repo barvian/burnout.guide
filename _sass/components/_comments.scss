@@ -1,0 +1,123 @@
+// Comments
+// ========
+
+.comment:not(.is-reply), .new-comment:not(.is-reply) {
+  background: #fff;
+  box-shadow: 0 10px 35px -10px rgba($light-gray, 0.2);
+
+  @include leading(var(--massive));
+  @include trailing(var(--massive));
+}
+
+.comment {
+  @include compact;
+
+  > .new-comment {
+    border-top: 2px solid $off-white;
+  }
+}
+
+.comment__toplevel {
+  padding: var(--spacing);
+
+  @include vertical(calc(var(--spacing) / 2));
+}
+
+.comment__header {
+  font-size: var(--small);
+
+  @include horizontal(0.35em);
+}
+
+.comment__author {
+  color: $dark;
+  font-weight: 500;
+}
+
+.comment__date {
+  color: $light-gray;
+  font-size: var(--tiny);
+}
+
+.comment__reply {
+  color: $green;
+}
+
+.comment__replies {
+  @include compact;
+
+  > .comment.is-reply {
+    border-top: 2px solid $off-white;
+  }
+} 
+
+// New comment
+// -----------
+
+
+.new-comment {
+  @include compact;
+}
+
+.new-comment__extra-wrapper {
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 350ms ease-in-out;
+  
+  @include flush;
+}
+
+.new-comment__extra {
+  padding: 0 var(--spacing) var(--spacing);
+
+  @media (min-width: $full) {
+    align-items: center;
+    display: flex;
+
+    @include compact;
+
+    .new-comment__name {
+      flex: 1;
+    }
+  }
+}
+
+.new-comment__message.new-comment__message {
+  border: none;
+  display: block;
+  padding: calc(var(--spacing) + 2px) var(--spacing) var(--spacing);
+  width: 100%;
+}
+
+.new-comment__message:not(:invalid) ~ .new-comment__extra-wrapper {
+  max-height: 22em;
+
+  @media (min-width: 600px) {
+    max-height: 16em;
+  }
+}
+
+.new-comment__captcha {
+  @include removed;
+}
+
+.new-comment__name {
+  color: $dark;
+}
+
+.new-comment__name, .new-comment__email, .new-comment__subscribe + label {
+  display: block;
+  width: 100%;
+}
+
+.new-comment__email-wrapper {
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 350ms ease-in-out;
+
+  @include flush;
+}
+
+.new-comment__subscribe:checked ~ .new-comment__email-wrapper {
+  max-height: 4em;
+}
