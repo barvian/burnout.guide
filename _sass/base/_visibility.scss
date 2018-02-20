@@ -1,0 +1,11 @@
+// Visibility
+// ==========
+
+[hidden], .hidden {
+  @include hidden;
+}
+
+[style*="position: absolute"],
+[style*="position:absolute"] {
+  @include removed;
+}

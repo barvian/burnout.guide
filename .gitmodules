@@ -1,0 +1,9 @@
+[submodule "_sass/tools/modularscale"]
+	path = _sass/tools/modularscale
+	url = https://github.com/modularscale/modularscale-sass.git
+[submodule "js/lib/form-data"]
+	path = js/lib/form-data
+	url = https://github.com/jimmywarting/FormData.git
+[submodule "js/lib/url-search-params"]
+	path = js/lib/url-search-params
+	url = https://github.com/WebReflection/url-search-params
