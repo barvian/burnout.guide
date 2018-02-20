@@ -1,0 +1,49 @@
+# Burnout.guide
+# =============
+
+url: http://burnout.guide
+keywords:
+  - burnout
+  - health
+  - life
+  - work
+
+secrets:
+  typekit: 'gda7geu'
+  recaptcha:
+    site: '6Lf5TUwUAAAAANKAsm4baH_MwQ2NZcnx2dNX_Gfb'
+    secret: '6Lf5TUwUAAAAAFfQjnt-BEYR00tpoXOu3vllRTgH'
+
+permalink: pretty
+
+# Collections
+# -----------
+
+collections:
+  articles:
+    output: true
+    permalink: /:path/
+
+# Defaults
+# --------
+
+defaults:
+  -
+    scope:
+      path: ""
+      type: "articles"
+    values:
+      layout: "article"
+      author: "Maxwell Barvian"
+
+# Build settings
+# --------------
+
+exclude:
+  - CNAME
+  - README.md
+
+permalink: pretty
+
+sass:
+  style: compressed

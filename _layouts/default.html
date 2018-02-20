@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en" class="no-js">
+  <title>{% if page.title %}{{page.title}} | {% endif %}burnout.guide</title>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  {% if site.keywords %}
+    <meta name="keywords" content="{{ site.keywords | join: ', ' }}" />
+  {% endif %}
+  <link rel="canonical" href="{{ page.url | prepend: site.url }}" />
+  
+  {% include inline_styles.html file='critical.scss' %}
+  {% assign critical_styles = layout.critical_styles %}
+  {% if page.critical_styles %}{% assign critical_styles = critical_styles | concat: page.critical_styles | uniq %}{% endif %}
+  {% for file in critical_styles %}
+    {% include inline_styles.html file=file %}
+  {% endfor %}
+  
+  {% assign scripts = layout.scripts %}
+  {% if page.scripts %}{% assign scripts = scripts | concat: page.scripts | uniq %}{% endif %}
+  {% include scripts.html files=scripts %}
+  
+  {{ content }}
+
+  {% assign non-critical_styles = layout.non-critical_styles %}
+  {% if page.non-critical_styles %}{% assign non-critical_styles = non-critical_styles | concat: page.non-critical_styles | uniq %}{% endif %}
+  {% include non-critical_styles.html files=non-critical_styles %}
+</html>
