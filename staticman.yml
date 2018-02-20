@@ -1,0 +1,19 @@
+comments:
+  branch: "development"
+  path: "_data/comments/{options.slug}"
+  format: "yaml"
+  moderation: true
+  commitMessage: "New comment."
+  filename: "comment-{@timestamp}"
+  allowedFields: ['name', 'body', 'replying_to']
+  requiredFields: ['name', 'body']
+  generatedFields:
+    date:
+      type: "date"
+      options:
+        format: "iso8601"
+  reCaptcha:
+    enabled: true
+    siteKey: "6Lf5TUwUAAAAANKAsm4baH_MwQ2NZcnx2dNX_Gfb"
+    secret: "zUGLT/hclZZKwfrRGE+e1FtAjjJyffE5qrFtAnePuhfRE2XggY+4PnOW0b1RxkLkZ4MZB7suH98OIA8W1HQQwhfqp9Af5asUhZLcRqo/JPp+vFMWBWK2Ss+MdA8iKO/D8q/TaGUJZgfcV6OVfxL57U5negIf9ZKD67DsjrqkyA8="
+  

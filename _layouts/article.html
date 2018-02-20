@@ -1,0 +1,44 @@
+---
+layout: default
+critical_styles:
+  - article.scss
+non-critical_styles:
+  - '/css/article.css'
+scripts:
+  - '/js/lib/autogrow.js'
+  - '/js/article.js'
+  - 'https://www.google.com/recaptcha/api.js?render=explicit'
+---
+
+<a
+  class="caps home-link" href="{% link index.html %}"
+  onclick="return sessionStorage && sessionStorage.getItem('previous') === '{% link index.html %}' ? window.history.back() || false : undefined"
+>
+  {% include arrow.svg %}
+  Home
+</a>
+
+<main role="main">
+  <article class="article">
+    {{ content }}
+  </article>
+  
+  {% assign comments = site.data.comments[page.slug] | where_exp: 'item', "item.replying_to == ''" %}
+  {% if comments.size > 1 %}{% assign comments = comments | sort: 'date' | reverse %}{% endif %}
+  <section class="comments non-critical">
+    <header class="comments__header">
+      <h2>What's your take?</h2>
+      <p>
+        I'd love to hear what your experience has been.
+      </p>
+    </header>
+    {% include new_comment.html %}
+    {% for comment in comments %}
+      {% assign data = comment %}
+      {% if comment[1] %}{% assign data = comment[1] %}{% endif %}
+      {% include comment.html id=data._id body=data.body name=data.name date=data.date %}
+    {% endfor %}
+    {% include new_comment.html reply=true %}
+  </section>
+  
+</main>
