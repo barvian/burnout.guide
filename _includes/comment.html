@@ -1,0 +1,19 @@
+<article
+  {% if include.id %}id="{{include.id}}"{% endif %}
+  class="comment{% if include.name == page.author %} is-op{% endif %}{% if include.replying_to %} is-child{% endif %}"
+>
+  {% include autolink.html content=include.message %}
+  {% if include.id %}
+    {% assign replies = site.data.comments[page.slug] | where_exp: 'item', "item.replying_to == include.id" %}
+    {% if replies.size > 1 %}{% assign replies = replies | sort: 'date' %}{% endif %}
+    {% if replies.size > 0 %}
+      <section class="comment__replies">
+        {% for reply in replies %}
+          {% assign data = reply %}
+          {% if reply[1] %}{% assign data = reply[1] %}{% endif %}
+          {% include comment.html id=data._id replying_to=data.replying_to message=data.message name=data.name %}
+        {% endfor %}
+      </section>
+    {% endif %}
+  {% endif %}
+</article>

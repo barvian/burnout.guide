@@ -1,0 +1,28 @@
+// Page
+// ====
+
+:root {
+  background-color: #fff;
+  height: 100%;
+  overflow-x: hidden;
+  
+  @media (min-width: $full) {
+    padding-left: 6px;
+
+    &::after {
+      background-color: $green;
+      content: '';
+      height: 100%;
+      left: 0;
+      position: fixed;
+      top: 0;
+      width: 6px;
+    }
+  }
+}
+
+body {
+  min-height: 100%;
+  overflow: hidden;
+  position: relative;
+}

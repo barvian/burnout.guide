@@ -1,0 +1,88 @@
+<script>
+  const typekitKey = 'typekit_styles_cache'  
+
+  let polyfills = []
+  if (!('fetch' in window)) polyfills.push('fetch')
+  if (!('Promise' in window)) polyfills.push('Promise')
+  if (!('isArray' in Array)) polyfills.push('Array.isArray')
+  if (!('keys' in Object)) polyfills.push('Object.keys')
+  if (!('assign' in Object)) polyfills.push('Object.assign')
+  if (!('classList' in Element.prototype)) polyfills.push('Element.prototype.classList')
+  if (!('includes' in String.prototype)) polyfills.push('String.prototype.includes')
+  if (polyfills.length > 0) {
+    let scriptEl = document.createElement('script')
+    scriptEl.src = 'https://cdn.polyfill.io/v2/polyfill.min.js?features=' + polyfills.join(',') + '&flags=gated,always&ua=chrome/50'
+    scriptEl.onload = setup
+    document.head.appendChild(scriptEl)
+  } else {
+    setup()
+  }
+
+  function setup() {
+    document.documentElement.classList.remove('no-js')
+
+    initTypekit()
+    setPrevious()
+    setupPageScripts()
+  }
+
+  function setPrevious() {
+    window.onbeforeunload = function () {
+      ('sessionStorage' in window) && sessionStorage.setItem('previous', '{{page.url}}')
+    }
+  }
+
+  function setupPageScripts() {
+    let scripts = [
+      {% for script in include.files %}'{{script}}',{% endfor %}
+    ]
+    scripts.forEach(function (script) {
+      let scriptEl = document.createElement('script')
+      scriptEl.src = script
+      scriptEl.async = false
+      scriptEl.defer = true
+      document.head.appendChild(scriptEl)
+    })
+  }
+
+  function initTypekit() {
+    if ('sessionStorage' in window && sessionStorage.getItem(typekitKey)) {
+      makeTypekitStyle()
+    } else {
+      makeTypekitScript()
+    }
+  }
+
+  function cacheTypekitStyles() {
+    if (!('sessionStorage' in window)) return
+    const styles = Array.from(document.head.getElementsByTagName('style'))
+      .filter(function (child) {
+        return child.styleSheet ?
+          child.styleSheet.cssText.includes('typekit') :
+          child.innerHTML.includes('typekit')
+      })
+      .map(function (child) {
+        return child.styleSheet ? child.styleSheet.cssText : child.innerHTML
+      })
+      .join('\n')
+
+    sessionStorage.setItem(typekitKey, styles)
+  }
+
+  function makeTypekitScript() {
+    const js = document.createElement('script')
+    js.async = true
+    js.src = 'https://use.typekit.net/{{site.secrets.typekit}}.js'
+    js.onload = function () { Typekit.load({ active: cacheTypekitStyles, classes: false }) }
+    document.head.appendChild(js)
+  }
+
+  function makeTypekitStyle() {
+    const styleEl = document.createElement('style')
+    const cssText = sessionStorage.getItem(typekitKey)
+    styleEl.type = 'text/css'
+    if (styleEl.styleSheet) styleEl.styleSheet.cssText = cssText
+    else styleEl.appendChild(document.createTextNode(cssText))
+    document.head.appendChild(styleEl)
+  }
+</script>

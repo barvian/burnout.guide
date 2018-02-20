@@ -1,0 +1,50 @@
+<form class="new-comment js-new-comment" method="POST" action="https://api.staticman.net/v2/entry/barvian/burnout.guide/development/comments">
+  <input type="hidden" name="options[origin]" value="{{ page.url | absolute_url }}">
+  <input type="hidden" name="options[parent]" value="{{ page.url | absolute_url }}">
+  <input type="hidden" name="options[slug]" value="{{ page.slug }}">
+  
+  <label hidden for="comment">Comment</label>
+  <textarea id="comment"
+    required
+    class="new-comment__message"
+    name="fields[message]"
+    rows=1 data-grow
+    placeholder="Write a reply..."
+  ></textarea>
+  <div class="new-comment__info-wrapper">
+    <fieldset class="new-comment__info">
+      <legend hidden>Info</legend>
+      <label hidden for="name">Name</label>
+      <input type="text"
+        id="name"
+        required
+        class="new-comment__name"
+        name="fields[name]"
+        placeholder="Name"
+      />
+      <input type="checkbox"
+        class="new-comment__subscribe"
+        id="subscribe" 
+        name="options[subscribe]"
+        value="email"
+      />
+      <label for="subscribe">Notify me of new comments via email</label>
+      <div class="new-comment__email-wrapper">
+        <input type="email"
+          id="name"
+          class="new-comment__email"
+          name="fields[email]"
+          placeholder="Email (for notifications only)"
+          spellcheck="false"
+        />
+      </div>
+      <button disabled type="submit" class="new-comment__post">Leave comment</button>
+      <div
+        class="new-comment__captcha g-recaptcha"
+        data-badge="inline"
+        data-sitekey="{{site.secrets.recaptcha.site}}"
+        data-size="invisible"
+      ></div>
+    </fieldset>
+  </div>
+</form>
