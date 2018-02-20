@@ -1,0 +1,79 @@
+{%- capture p -%}{% if include.reply %}reply{% else %}comment{% endif %}{%- endcapture -%}
+{% capture hiddenFields %}
+  <input type="hidden" name="options[origin]" value="{{ page.url | absolute_url }}" />
+  <input type="hidden" name="options[parent]" value="{{ page.url | absolute_url }}" />
+  <input type="hidden" name="options[slug]" value="{{ page.slug }}" />
+  <input type="hidden" name="options[reCaptcha][siteKey]" value="{{site.secrets.reCaptcha.siteKey}}">
+  <input type="hidden" name="options[reCaptcha][secret]" value="{{site.secrets.reCaptcha.secret}}">
+{% endcapture %}
+<div
+  {% if include.reply %}hidden{% endif %}
+  class="new-comment js-new-comment{% if include.reply %} is-reply{% endif %}"
+  id="{{p}}"
+>
+  <form
+    class="new-comment__form"
+    method="post"
+    action="https://api.staticman.net/v2/entry/{{site.repository}}/{{site.staticman.branch}}/comments"
+  >
+    {{hiddenFields}}
+    {% if include.reply %}
+      <input type="hidden" name="fields[replying_to]" value="" />
+    {% endif %}
+    
+    <label hidden for="{{p}}-message">Comment</label>
+    <textarea id="{{p}}-message"
+      required
+      class="new-comment__message js-autogrow"
+      name="fields[body]"
+      rows=1
+      placeholder="{% if include.reply %}Write a reply...{% else %}Leave a comment...{% endif %}"
+    ></textarea>
+    <div class="new-comment__extra-wrapper">
+      <div class="new-comment__extra button-field">
+        <label hidden for="{{p}}-name">Name</label>
+        <input type="text"
+          id="{{p}}-name"
+          required
+          class="new-comment__name"
+          name="fields[name]"
+          placeholder="Name"
+        />
+        <button disabled type="submit">Leave comment</button>
+        <div
+          hidden
+          class="new-comment__captcha g-recaptcha"
+          data-badge="bottomright"
+          data-sitekey="{{site.secrets.reCaptcha.siteKey}}"
+          data-size="invisible"
+        ></div>
+      </div>
+    </div>
+  </form>
+  <form
+    class="new-comment__success"
+    method="post"
+    action="https://api.staticman.net/v2/entry/{{site.repository}}/{{site.staticman.branch}}/comments"
+  >
+    {{hiddenFields}}
+    <input type="hidden" name="options[subscribe]" value="email" />
+    <input type="hidden" name="g-recaptcha-response" value="" />
+    <div class="new-comment__success-message">
+      <span class="new-comment__success-header">Thanks for your input!</span>
+      <p>Your comment will appear once it's been approved. Want to get e-mailed when new comments are left on this post?</p>
+      <p class="new-comment__subscribed">&#10003; You're subscribed to e-mail notifications.</p>
+      <div class="button-field new-comment__subscribe">
+        <label for="{{p}}-email" hidden>Email</label>
+        <input type="email"
+          id="{{p}}-email"
+          required
+          class="new-comment__email"
+          name="fields[email]"
+          placeholder="Email (for notifications only)"
+          spellcheck="false"
+        />
+        <button disabled type="submit">Subscribe</button>
+      </div>
+    </div>
+  </form>
+</div>

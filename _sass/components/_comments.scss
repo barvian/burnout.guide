@@ -1,0 +1,131 @@
+// Comments
+// ========
+
+.comment:not(.is-reply), .new-comment:not(.is-reply) {
+  background: #fff;
+  box-shadow: 0 10px 35px -10px rgba($light-gray, 0.2);
+
+  @include leading(var(--massive));
+  @include trailing(var(--massive));
+}
+
+.comment {
+  @include compact;
+
+  > .new-comment {
+    border-top: 2px solid $off-white;
+  }
+}
+
+.comment__toplevel {
+  padding: var(--spacing);
+
+  @include vertical(calc(var(--spacing) / 2));
+}
+
+.comment__header {
+  font-size: var(--small);
+
+  @include horizontal(0.35em);
+}
+
+.comment__author {
+  color: $dark;
+  font-weight: 500;
+}
+
+.comment__date {
+  color: $light-gray;
+  font-size: var(--tiny);
+}
+
+.comment__reply {
+  color: $green;
+}
+
+.comment__replies {
+  @include compact;
+
+  > .comment.is-reply {
+    border-top: 2px solid $off-white;
+  }
+}
+
+.comment__footer {
+  padding: 0 var(--spacing) var(--spacing);
+  margin-top: calc(var(--spacing) / -2);
+}
+
+// New comment
+// -----------
+
+.new-comment {
+  @include compact;
+}
+
+.new-comment__form {
+  @include compact;
+}
+
+.new-comment__extra-wrapper {
+  @include collapsed(350ms);
+}
+
+  .new-comment__message:not(:invalid) ~ .new-comment__extra-wrapper {
+    @include expanded(22em, (600px: 16em));
+  }
+
+.new-comment__extra {
+  padding: 0 var(--spacing) var(--spacing);
+}
+
+.new-comment__message.new-comment__message {
+  border: none;
+  display: block;
+  padding: calc(var(--spacing) + 2px) var(--spacing) var(--spacing);
+  width: 100%;
+}
+
+.new-comment__captcha {
+  @include removed;
+}
+
+.new-comment__name, .new-comment__email {
+  color: $dark;
+  display: block;
+  width: 100%;
+}
+
+.new-comment__success {
+  @include collapsed(350ms);
+}
+
+  .new-comment.did-submit .new-comment__form {
+    @include collapsed;
+  }
+
+  .new-comment.did-submit .new-comment__success {
+    @include expanded(22em, (600px: 16em));
+  }
+
+  .new-comment__success.did-subscribe .new-comment__subscribe,
+  .new-comment__success:not(.did-subscribe) .new-comment__subscribed {
+    display: none;
+  }
+
+.new-comment__success-message {
+  padding: var(--spacing);
+
+  @include vertical(calc(var(--spacing) / 2));
+}
+
+.new-comment__success-header {
+  color: $green;
+  display: block;
+  font-family: $heading;
+  font-size: var(--big);
+}
+
+.new-comment__subscribed {
+  color: $green;
+}

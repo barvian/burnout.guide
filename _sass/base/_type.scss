@@ -1,0 +1,56 @@
+// Type
+// ====
+
+// Base
+// ----
+
+:root {
+  color: $gray;
+  line-height: ms(4)/ms(0);
+  text-rendering: optimizeLegibility;
+  font-family: $body;
+  @include ms-respond(font-size, 0);
+  font-weight: 400;
+  font-kerning: normal;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-size-adjust: none;
+}
+
+::selection {
+  background: rgba($green, 0.2);
+}
+
+// Type
+// ----
+
+h1, h2, p {
+  max-width: $line;
+}
+
+h1, h2 {
+  font-family: $heading;
+  font-weight: 400;
+  line-height: ms(2)/ms(0);
+}
+
+h1 {
+  color: $dark-gray;
+  font-size: var(--huge);
+}
+
+h2 {
+  font-size: var(--massive);
+}
+
+.caps {
+  color: $green;
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: var(--tiny);
+  font-weight: bold;
+  letter-spacing: 0.04em;
+  text-decoration: none;
+  text-transform: uppercase;
+
+  @include trailing(var(--small));
+}
