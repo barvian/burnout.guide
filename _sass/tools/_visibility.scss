@@ -1,0 +1,25 @@
+// Visibility
+// ==========
+
+@mixin hidden {
+  display: none !important;
+  
+  @include removed;
+}
+
+@mixin collapsed($time: null) {
+  max-height: 0;
+  overflow: hidden;
+  @if $time {
+    transition: max-height $time ease-in-out;
+  }
+}
+
+@mixin expanded($expanded, $queries: ()) {
+  max-height: $expanded;
+  @each $min-width, $max-height in $queries {
+    @media (min-width: $min-width) {
+      --expanded-max-height: $max-height;
+    }
+  }
+}
