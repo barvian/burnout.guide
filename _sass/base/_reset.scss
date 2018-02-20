@@ -1,0 +1,11 @@
+// Reset
+// =====
+// 
+// This is critical, so it will get inlined on each page.
+// No room for normalize.css, or something larger.
+//
+
+* {
+  margin: 0;
+  padding: 0;
+}

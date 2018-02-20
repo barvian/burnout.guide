@@ -1,0 +1,6 @@
+<article
+  id="comment{% unless include.r %}{{ index | prepend: '-' }}{% else %}{{ include.index | prepend: '-' }}{% endunless %}"
+  class="comment{% if comment.name == page.author %} is-op{% endif %}{% unless comment.replying_to == 0 %} is-child{% endunless %}"
+>
+  {% include autolink.html content=comment.message %}
+</article>

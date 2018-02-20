@@ -1,0 +1,6 @@
+[submodule "_sass/tools/modularscale"]
+	path = _sass/tools/modularscale
+	url = https://github.com/modularscale/modularscale-sass.git
+[submodule "js/lib/textarea-autogrow"]
+	path = js/lib/textarea-autogrow
+	url = https://github.com/evyros/textarea-autogrow.git

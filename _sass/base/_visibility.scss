@@ -1,0 +1,8 @@
+// Visibility
+// ==========
+
+[hidden], .hidden {
+  display: none !important;
+  
+  @include removed;
+}

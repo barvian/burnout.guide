@@ -1,0 +1,51 @@
+@import "shared";
+@import "components/article";
+
+body {
+  display: flex;
+  flex-flow: column nowrap;
+  justify-content: center;
+}
+
+.article {
+  padding: $global-padding $global-padding $spacing;
+
+  @media (min-width: $full) {
+    padding-bottom: scalc("#{ms(6)} + 15vh");
+    padding-top: scalc("#{ms(6)} + 15vh");
+  }
+}
+
+.home-link {
+  opacity: 0.65;
+  margin-left: $global-padding;
+  margin-top: $global-padding;
+  transform: opacity 200ms ease-in-out;
+
+  @include removed;
+
+  > svg {
+    display: inline-block;
+    height: 0.5em;
+    margin-right: 0.25em;
+    position: relative;
+    top: -0.1em;
+    transition: transform 100ms ease-in-out;
+    vertical-align: middle;
+  }
+
+  &:focus, &:hover {
+    opacity: 1;
+
+    > svg {
+      transform: translateX(-0.25em);
+    }
+  }
+
+  @media (min-width: $full) {
+    left: scalc("#{$spacing} + 0.25em");
+    margin: 0;
+    top: $spacing;
+    position: fixed;
+  }
+}

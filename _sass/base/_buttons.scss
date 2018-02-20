@@ -1,0 +1,19 @@
+// Buttons
+// =======
+
+button, input[type="button"], .button {
+  appearance: none;
+  background: $green;
+  cursor: pointer;
+  color: #fff;
+  border: none;
+  display: inline-block;
+  font-family: $sans;
+  @include ms-respond(font-size, -1);
+  font-weight: bold;
+  letter-spacing: 0.04em;
+  line-height: 1;
+  text-decoration: none;
+  text-transform: uppercase;
+  padding: ms(-1) ms(-2);
+}
