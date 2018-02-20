@@ -1,0 +1,2 @@
+{% capture styles %}{% include {{include.file}} %}{% endcapture %}
+<style>{{ styles | scssify | strip }}</style>

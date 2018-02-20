@@ -1,0 +1,28 @@
+---
+layout: default
+---
+
+{% include inline_styles.html file='home.scss' %}
+
+<main role="main">
+  <h1 class="caps">burnout.guide</h1>
+  <h1>Recovering from burnout</h1>
+  <p>
+    A small collection of everything that helped me recover from a
+    <a href="{% link _articles/about.md %}">severe case of physical & mental burnout.</a>
+    Listed in order of helpfulness for me.
+  </p>
+  
+  <nav class="toc">
+    {% for item in site.data.toc %}
+      {% assign article = site.articles | where: 'path', item | first %}
+      <a href="{{article.url}}">{{article.title}}</a>
+    {% endfor %}
+  </nav>
+</main>
+
+<img alt=""
+  class="leaves"
+  srcset="{% link img/leaves.jpg %} 1x, {% link img/leaves@2x.jpg %} 2x"
+  onload="this.classList.add('did-load')"
+/>

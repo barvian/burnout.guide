@@ -1,0 +1,10 @@
+// Spacing
+// =======
+
+* {
+  @include leading;
+}
+
+body {
+  @include flush;
+}
