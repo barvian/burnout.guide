@@ -1,4 +1,4 @@
-{%- assign replies = site.data.comments[page.slug] | where_exp: 'item', "item.replying_to == include.id" -%}
+{%- assign replies = site.data.comments[page.slug] | where: 'type', 'comment' | where_exp: 'item', "item.replying_to == include.id" -%}
 {%- if replies.size > 1 -%}{%- assign replies = replies | sort: 'date' -%}{%- endif -%}
 <article
   {% if include.id %}id="{{include.id}}"{% endif %}

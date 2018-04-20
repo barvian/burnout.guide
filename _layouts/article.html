@@ -22,7 +22,7 @@ scripts:
     {{ content }}
   </article>
   
-  {% assign comments = site.data.comments[page.slug] | where_exp: 'item', "item.replying_to == ''" %}
+  {% assign comments = site.data.comments[page.slug] | where: 'type', 'comment' | where_exp: 'item', "item.replying_to == ''" %}
   {% if comments.size > 1 %}{% assign comments = comments | sort: 'date' | reverse %}{% endif %}
   <section class="comments non-critical">
     <header class="comments__header">

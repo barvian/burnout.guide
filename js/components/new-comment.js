@@ -11,8 +11,9 @@
       callback: this.post
     })
     this.body = this.form.querySelector('.new-comment__message')
-    this.replyingTo = this.form.elements['fields[replying_to]']
     this.wrapper = this.form.querySelector('.new-comment__wrapper')
+    this.replyingTo = this.form.elements['fields[replying_to]']
+    this.parent = this.form.elements['options[parent]']
     this.submit = this.form.querySelector('[type="submit"]')
     this.subscription = new Subscription(this.el.querySelector('.js-subscription'))
 
@@ -67,6 +68,7 @@
   NewComment.prototype.replyTo = function (id) {
     this.reset()
     this.replyingTo.value = id
+    this.parent.value = id
     this.el.classList.remove('did-submit')
     this.subscription.setParent(id)
   }
