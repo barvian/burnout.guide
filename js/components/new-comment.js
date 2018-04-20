@@ -52,7 +52,7 @@
       })
       .then(function () {
         self.submit.classList.remove('is-loading')
-        this.wrapper.disabled = false
+        self.wrapper.disabled = false
       })
       .catch(function (error) {
         self.submit.classList.remove('is-loading')
