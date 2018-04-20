@@ -4,16 +4,20 @@
   class="new-comment js-new-comment{% if include.reply %} is-reply{% endif %}"
   id="{{p}}"
 >
+  {% capture hidden_fields %}
+    <input type="hidden" name="options[origin]" value="{{ page.url | absolute_url }}" />
+    <input type="hidden" name="options[slug]" value="{{ page.slug }}" />
+    <input type="hidden" name="options[parent]" value="{{ page.slug }}" />
+    <input type="hidden" name="options[reCaptcha][siteKey]" value="{{site.secrets.reCaptcha.siteKey}}">
+    <input type="hidden" name="options[reCaptcha][secret]" value="{{site.secrets.reCaptcha.secret}}">
+  {% endCapture %}
   <form
     class="new-comment__form"
     method="post"
     action="https://api.staticman.net/v2/entry/{{site.repository}}/{{site.staticman.branch}}/comments"
   >
     <fieldset class="new-comment__wrapper">
-      <input type="hidden" name="options[slug]" value="{{ page.slug }}" />
-      <input type="hidden" name="options[parent]" value="{{ page.slug }}" />
-      <input type="hidden" name="options[reCaptcha][siteKey]" value="{{site.secrets.reCaptcha.siteKey}}">
-      <input type="hidden" name="options[reCaptcha][secret]" value="{{site.secrets.reCaptcha.secret}}">
+      {{hidden_fields}}
       <input type="hidden" name="fields[replying_to]" value="" />
       
       <label hidden for="{{p}}-message">Comment</label>
@@ -52,12 +56,9 @@
     action="https://api.staticman.net/v2/entry/{{site.repository}}/{{site.staticman.branch}}/comments"
   >
     <fieldset>
-      <input type="hidden" name="options[origin]" value="{{ page.url | absolute_url }}" />
-      <input type="hidden" name="options[slug]" value="{{ page.slug }}" />
-      <input type="hidden" name="options[parent]" value="{{ page.slug }}" />
-      <input type="hidden" name="options[reCaptcha][siteKey]" value="{{site.secrets.reCaptcha.siteKey}}">
-      <input type="hidden" name="options[reCaptcha][secret]" value="{{site.secrets.reCaptcha.secret}}">
+      {{hidden_fields}}
       <input type="hidden" name="options[subscribe]" value="email" />
+      
       <div class="new-comment__success-message">
         <span class="new-comment__success-header">Thanks for your input!</span>
         <p>
