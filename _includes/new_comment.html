@@ -14,7 +14,6 @@
       <input type="hidden" name="options[parent]" value="{{ page.slug }}" />
       <input type="hidden" name="options[reCaptcha][siteKey]" value="{{site.secrets.reCaptcha.siteKey}}">
       <input type="hidden" name="options[reCaptcha][secret]" value="{{site.secrets.reCaptcha.secret}}">
-      <input type="hidden" name="fields[type]" value="comment" />
       <input type="hidden" name="fields[replying_to]" value="" />
       
       <label hidden for="{{p}}-message">Comment</label>
@@ -54,11 +53,11 @@
   >
     <fieldset>
       <input type="hidden" name="options[origin]" value="{{ page.url | absolute_url }}" />
+      <input type="hidden" name="options[slug]" value="{{ page.slug }}" />
       <input type="hidden" name="options[parent]" value="{{ page.slug }}" />
       <input type="hidden" name="options[reCaptcha][siteKey]" value="{{site.secrets.reCaptcha.siteKey}}">
       <input type="hidden" name="options[reCaptcha][secret]" value="{{site.secrets.reCaptcha.secret}}">
       <input type="hidden" name="options[subscribe]" value="email" />
-      <input type="hidden" name="fields[type]" value="subscription" />
       <div class="new-comment__success-message">
         <span class="new-comment__success-header">Thanks for your input!</span>
         <p>

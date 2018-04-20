@@ -6,8 +6,8 @@ comments:
   commitMessage: "New comment."
   filename: "comment-{@timestamp}"
   allowedOrigins: ['burnout.guide', 'localhost']
-  allowedFields: ['type', 'name', 'body', 'email', 'replying_to']
-  requiredFields: ['type'] # email subscriptions happen with the same request...
+  allowedFields: ['name', 'body', 'email', 'replying_to']
+  requiredFields: [] # email subscriptions happen with the same request...
   generatedFields:
     date:
       type: "date"
